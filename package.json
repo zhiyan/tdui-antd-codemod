@@ -1,15 +1,16 @@
 {
-  "name": "@ant-design/codemod-v4",
-  "version": "1.0.1",
-  "description": "Codemod for ant design v4 upgrade",
+  "name": "tdui-antd-codemode",
+  "version": "0.0.1",
+  "description": "Codemod for tdui to antd",
   "bin": {
-    "antd4-codemod": "./bin/antd-codemod.js"
+    "tdui-antd-codemod": "./bin/tdui-antd-codemod.js"
   },
   "files": [
     "bin",
     "transforms"
   ],
   "keywords": [
+    "td ui",
     "ant design",
     "codemod",
     "antd"

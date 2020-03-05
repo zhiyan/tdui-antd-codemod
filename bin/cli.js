@@ -30,9 +30,8 @@ const babylonConfig = path.join(__dirname, './babylon.config.json');
 const ignoreConfig = path.join(__dirname, './codemod.ignore');
 
 const transformers = [
-  // TODO: 考虑大多数项目并没有直接使用新版本的 `@antd-design/icons`
-  // 该项 codemod script 如需使用请通过 extraScripts 传入
-  // 'v4-Icon-Outlined',
+  'tdui-to-antd',
+  'tdui-Dialog-to-Modal',
   'v3-Icon-to-v4-Icon',
   'v3-Modal-method-with-icon-to-v4',
   'v3-component-with-string-icon-props-to-v4',
