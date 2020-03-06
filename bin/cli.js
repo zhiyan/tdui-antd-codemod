@@ -30,6 +30,7 @@ const babylonConfig = path.join(__dirname, './babylon.config.json');
 const ignoreConfig = path.join(__dirname, './codemod.ignore');
 
 const transformers = [
+  'tdui-icon',
   'tdui-to-antd',
   'tdui-Dialog-to-Modal',
   'v3-Icon-to-v4-Icon',

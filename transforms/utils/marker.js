@@ -15,9 +15,15 @@ const compatibleMarkerPath = path.join(
   './antd4-v4-compatible.marker.txt',
 );
 
+const tdiconMarkerPath = path.join(
+  require('os').tmpdir(),
+  './td-icon.marker.txt',
+);
+
 const dependencyMarkerPathMap = {
   '@ant-design/icons': iconMarkerPath,
   '@ant-design/compatible': compatibleMarkerPath,
+  'td-icon': tdiconMarkerPath,
 };
 
 const fsOpenAsync = promisify(fs.open);

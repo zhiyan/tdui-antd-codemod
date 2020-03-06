@@ -10,7 +10,6 @@ const modalMethodNames = ['info', 'success', 'error', 'warning', 'confirm'];
 module.exports = (file, api, options) => {
   const j = api.jscodeshift;
   const root = j(file.source);
-  const antdPkgNames = parseStrToArray(options.antdPkgNames || 'antd');
   const BEFORE = 'Dialog';
   const AFTER = 'Modal';
 
@@ -23,11 +22,11 @@ module.exports = (file, api, options) => {
         path =>
           path.node.name === BEFORE &&
           path.parent.node.type === 'ImportSpecifier' &&
-          antdPkgNames.includes(path.parent.parent.node.source.value),
+          path.parent.parent.node.source.value === 'td-ui',
       )
       .forEach(path => {
         hasChanged = true;
-        const antdPkgName = path.parent.parent.node.source.value;
+        const pkgName = path.parent.parent.node.source.value;
         hasChanged = true;
         const localComponentName = path.parent.node.local.name;
 
@@ -47,7 +46,7 @@ module.exports = (file, api, options) => {
               nodePath.node.name = AFTER;
 
               addSubmoduleImport(j, root, {
-                moduleName: antdPkgName,
+                moduleName: pkgName,
                 importedName: AFTER,
               });
             });
@@ -71,13 +70,13 @@ module.exports = (file, api, options) => {
               nodePath.node.callee.object.name = AFTER;
 
               addSubmoduleImport(j, root, {
-                moduleName: antdPkgName,
+                moduleName: pkgName,
                 importedName: AFTER,
               });
             });
         } else {
           addSubmoduleImport(j, root, {
-            moduleName: antdPkgName,
+            moduleName: pkgName,
             importedName: AFTER,
             localName: localComponentName,
           });
@@ -89,12 +88,6 @@ module.exports = (file, api, options) => {
 
   let hasChanged = false;
   hasChanged = renameDialogToModal(j, root) || hasChanged;
-
-  if (hasChanged) {
-    antdPkgNames.forEach(antdPkgName => {
-      removeEmptyModuleImport(j, root, antdPkgName);
-    });
-  }
 
   return hasChanged
     ? root.toSource(options.printOptions || printOptions)
