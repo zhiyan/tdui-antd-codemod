@@ -31,8 +31,9 @@ const ignoreConfig = path.join(__dirname, './codemod.ignore');
 
 const transformers = [
   'tdui-icon',
-  'tdui-to-antd',
+  'tdui-Loading-to-antd-Spin',
   'tdui-Dialog-to-Modal',
+  'tdui-to-antd',
   'v3-Icon-to-v4-Icon',
   'v3-Modal-method-with-icon-to-v4',
   'v3-component-with-string-icon-props-to-v4',

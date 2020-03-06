@@ -1,12 +1,6 @@
-[English](./README.md) | 简体中文
+# td-ui to antd v4 Codemod
 
-# Ant Design v4 Codemod
-
-一组帮助你升级到 antd v4 的 codemod 脚本集合，基于 [jscodeshift](https://github.com/facebook/jscodeshift) 构建。(受 [react-codemod](https://github.com/reactjs/react-codemod) 启发)
-
-[![NPM version](https://img.shields.io/npm/v/@ant-design/codemod-v4.svg?style=flat)](https://npmjs.org/package/@ant-design/codemod-v4)
-[![NPM downloads](http://img.shields.io/npm/dm/@ant-design/codemod-v4.svg?style=flat)](https://npmjs.org/package/@ant-design/codemod-v4)
-[![CircleCI](https://circleci.com/gh/ant-design/codemod-v4.svg?style=svg)](https://circleci.com/gh/ant-design/codemod-v4)
+基于 @ant-design/codemod-v4
 
 ## 使用
 
@@ -14,16 +8,45 @@
 
 ```shell
 # 全局安装
-npm i -g @ant-design/codemod-v4
+npm i -g tdui-antd-codemod
 # or for yarn user
-#  yarn global add @ant-design/codemod-v4
-antd4-codemod src
+#  yarn global add tdui-antd-codemod
+tdui-antd-codemod src
 
 # 使用 npx
-npx -p @ant-design/codemod-v4 antd4-codemod src
+npx -p tdui-antd-codemod tdui-antd-codemod src
 ```
 
 ## Codemod 脚本包括:
+
+#### `td-ui icon替换`
+
+```diff
+- import { Icon } from 'td-ui';
++ import { Icon } from 'td-icon';
+
+  ReactDOM.render( (
+    <div>
+      <Icon type="tupian">
+    </div>
+  );
+```
+
+#### `td-ui 组件替换为antd组件`
+
+```diff
+- import { Loading, Dialog } from 'td-ui';
++ import { Spin, Modal } from 'antd';
+
+  ReactDOM.render( (
+    <div>
+-     <Dialog />
++     <Modal />
+-     <Loading loading={false} text="loading" />
++     <Spin spinning={false} tip="loading" />
+    </div>
+  );
+```
 
 #### `v3-Component-to-compatible`
 
@@ -154,7 +177,3 @@ import { Modal } from 'antd';
     },
   });
 ```
-
-## License
-
-MIT

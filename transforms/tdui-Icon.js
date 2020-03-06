@@ -7,7 +7,7 @@ module.exports = (file, api, options) => {
   const root = j(file.source);
   const TDUI = 'td-ui';
 
-  function importDeprecatedComponent(j, root) {
+  function handleChange(j, root) {
     let hasChanged = false;
 
     root
@@ -46,7 +46,7 @@ module.exports = (file, api, options) => {
   }
 
   let hasChanged = false;
-  hasChanged = importDeprecatedComponent(j, root) || hasChanged;
+  hasChanged = handleChange(j, root) || hasChanged;
 
   if (hasChanged) {
     removeEmptyModuleImport(j, root, TDUI);

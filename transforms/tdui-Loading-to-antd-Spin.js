@@ -1,17 +1,16 @@
-const {
-  parseStrToArray,
-  removeEmptyModuleImport,
-  addSubmoduleImport,
-} = require('./utils');
+const { addSubmoduleImport } = require('./utils');
 const { printOptions } = require('./utils/config');
-
-const modalMethodNames = ['info', 'success', 'error', 'warning', 'confirm'];
 
 module.exports = (file, api, options) => {
   const j = api.jscodeshift;
   const root = j(file.source);
-  const BEFORE = 'Dialog';
-  const AFTER = 'Modal';
+  const BEFORE = 'Loading';
+  const AFTER = 'Spin';
+
+  const mapping = new Map([
+    ['text', 'tip'],
+    ['loading', 'spinning'],
+  ]);
 
   function handleChange(j, root) {
     let hasChanged = false;
@@ -51,27 +50,29 @@ module.exports = (file, api, options) => {
             });
 
           root
-            .find(j.CallExpression, {
-              callee: {
-                object: {
-                  type: 'Identifier',
-                  name: localComponentName,
-                },
-                property: {
-                  type: 'Identifier',
-                },
+            .findJSXElements(AFTER)
+            .find(j.JSXAttribute, {
+              name: {
+                type: 'JSXIdentifier',
+                name: 'text',
               },
             })
-            .filter(nodePath =>
-              modalMethodNames.includes(nodePath.node.callee.property.name),
-            )
+            .filter(nodePath => nodePath.parent.node.name.name === AFTER)
             .forEach(nodePath => {
-              nodePath.node.callee.object.name = AFTER;
+              nodePath.node.name = 'tip';
+            });
 
-              addSubmoduleImport(j, root, {
-                moduleName: pkgName,
-                importedName: AFTER,
-              });
+          root
+            .findJSXElements(AFTER)
+            .find(j.JSXAttribute, {
+              name: {
+                type: 'JSXIdentifier',
+                name: 'loading',
+              },
+            })
+            .filter(nodePath => nodePath.parent.node.name.name === AFTER)
+            .forEach(nodePath => {
+              nodePath.node.name = 'spinning';
             });
         } else {
           addSubmoduleImport(j, root, {

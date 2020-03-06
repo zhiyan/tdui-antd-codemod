@@ -4,7 +4,7 @@ module.exports = (file, api, options) => {
   const j = api.jscodeshift;
   const root = j(file.source);
 
-  function renameImportModule(j, root) {
+  function handleChange(j, root) {
     let hasChanged = false;
 
     root
@@ -19,7 +19,7 @@ module.exports = (file, api, options) => {
   }
 
   let hasChanged = false;
-  hasChanged = renameImportModule(j, root) || hasChanged;
+  hasChanged = handleChange(j, root) || hasChanged;
 
   return hasChanged
     ? root.toSource(options.printOptions || printOptions)

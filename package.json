@@ -15,13 +15,13 @@
     "codemod",
     "antd"
   ],
-  "homepage": "https://github.com/ant-design/codemod-v4",
+  "homepage": "https://github.com/zhiyan/tdui-antd-codemod",
   "repository": {
     "type": "git",
-    "url": "git@github.com:ant-design/codemod-v4.git"
+    "url": "git@github.com:zhiyan/tdui-antd-codemod.git"
   },
   "bugs": {
-    "url": "http://github.com/ant-design/codemod-v4/issues"
+    "url": "https://github.com/zhiyan/tdui-antd-codemod/issues"
   },
   "license": "MIT",
   "engines": {
