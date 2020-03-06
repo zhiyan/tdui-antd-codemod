@@ -1,6 +1,6 @@
 {
   "name": "tdui-antd-codemode",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Codemod for tdui to antd",
   "bin": {
     "tdui-antd-codemod": "./bin/tdui-antd-codemod.js"
