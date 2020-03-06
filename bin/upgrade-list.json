@@ -16,5 +16,8 @@
   },
   "@alipay/tech-ui": {
     "version": "1.14.0"
+  },
+  "td-icon": {
+    "version": "1.0.0"
   }
 }

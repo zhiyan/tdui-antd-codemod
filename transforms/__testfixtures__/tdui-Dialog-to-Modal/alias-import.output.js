@@ -1,4 +1,4 @@
-import { Col, Modal as Dialog, Row } from 'td-ui';
+import { Col, Modal as TestModal, Row } from 'td-ui';
 
 class App extends React.Component {
 
@@ -6,7 +6,7 @@ class App extends React.Component {
     return (
       <Row>
         <Col onClick={() => {
-          Dialog.confirm({
+          TestModal.confirm({
             title: '确认停用该报警模版吗?',
             closable: true,
             Dialog: 1,
@@ -20,7 +20,7 @@ class App extends React.Component {
             },
           });
         }}>123</Col>
-        <Dialog title="test" />
+        <TestModal title="test" />
       </Row>
     );
   }

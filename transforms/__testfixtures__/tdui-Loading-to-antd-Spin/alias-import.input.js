@@ -1,12 +1,12 @@
-import { Spin as Loading } from 'td-ui';
+import { Loading as TestLoading } from 'td-ui';
 
 class App extends React.Component {
 
   render() {
     return (
-      <Loading tip="加载中" spinning={false} size="large">
+      <TestLoading text="加载中" loading={false} size="large">
         <div style={{padding: 50, textAlign: 'center'}} text="aaa">loading Content</div>
-      </Loading>
+      </TestLoading>
     );
   }
 }

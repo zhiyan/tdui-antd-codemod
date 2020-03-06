@@ -4,7 +4,7 @@ jest.mock('../tdui-Loading-to-antd-Spin', () => {
   });
 });
 
-const tests = ['basic'];
+const tests = ['basic', 'alias-import'];
 
 const defineTest = require('jscodeshift/dist/testUtils').defineTest;
 

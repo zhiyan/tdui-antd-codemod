@@ -146,7 +146,7 @@ async function transform(transformer, parser, globPath, options) {
   }
 }
 
-async function upgradeDetect(targetDir, needIcon, needCompatible) {
+async function upgradeDetect(targetDir, needIcon, needCompatible, needTdIcon) {
   const result = [];
   const cwd = path.join(process.cwd(), targetDir);
   const closetPkgJson = await readPkgUp({ cwd });
@@ -171,6 +171,10 @@ async function upgradeDetect(targetDir, needIcon, needCompatible) {
         pkgUpgradeList['@ant-design/compatible'],
       ]);
     }
+
+    if (needTdIcon) {
+      result.push(['install', 'td-icon', pkgUpgradeList['td-icon']]);
+    }
   } else {
     const { packageJson } = closetPkgJson;
     pkgJsonPath = closetPkgJson.path;
@@ -182,6 +186,10 @@ async function upgradeDetect(targetDir, needIcon, needCompatible) {
     }
     if (needCompatible) {
       mustInstallOrUpgradeDeps.push('@ant-design/compatible');
+    }
+
+    if (needTdIcon) {
+      mustInstallOrUpgradeDeps.push('td-icon');
     }
 
     // handle mustInstallOrUpgradeDeps
@@ -306,7 +314,8 @@ async function bootstrap() {
     const dependenciesMarkers = await marker.output();
     const needIcon = dependenciesMarkers['@ant-design/icons'];
     const needCompatible = dependenciesMarkers['@ant-design/compatible'];
-    await upgradeDetect(dir, needIcon, needCompatible);
+    const needTdIcon = dependenciesMarkers['td-icon'];
+    await upgradeDetect(dir, needIcon, needCompatible, needTdIcon);
 
     console.log(
       `\n----------- Thanks for using @ant-design/codemod ${pkg.version} -----------`,

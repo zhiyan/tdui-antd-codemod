@@ -4,7 +4,7 @@ jest.mock('../tdui-Dialog-to-Modal', () => {
   });
 });
 
-const tests = ['basic'];
+const tests = ['basic', 'alias-import'];
 
 const defineTest = require('jscodeshift/dist/testUtils').defineTest;
 

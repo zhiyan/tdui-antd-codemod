@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign, no-shadow */
 const { printOptions } = require('./utils/config');
 const { addSubmoduleImport, removeEmptyModuleImport } = require('./utils');
 const { markDependency } = require('./utils/marker');

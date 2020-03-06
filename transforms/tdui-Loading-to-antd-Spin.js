@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign, no-shadow */
 const { addSubmoduleImport } = require('./utils');
 const { printOptions } = require('./utils/config');
 
@@ -6,11 +7,6 @@ module.exports = (file, api, options) => {
   const root = j(file.source);
   const BEFORE = 'Loading';
   const AFTER = 'Spin';
-
-  const mapping = new Map([
-    ['text', 'tip'],
-    ['loading', 'spinning'],
-  ]);
 
   function handleChange(j, root) {
     let hasChanged = false;
@@ -34,53 +30,41 @@ module.exports = (file, api, options) => {
             !specifier.imported || specifier.imported.name !== BEFORE,
         );
 
-        if (localComponentName === BEFORE) {
-          root
-            .findJSXElements(localComponentName)
-            .find(j.JSXIdentifier, {
-              name: localComponentName,
-            })
-            .forEach(nodePath => {
-              nodePath.node.name = AFTER;
-
-              addSubmoduleImport(j, root, {
-                moduleName: pkgName,
-                importedName: AFTER,
-              });
-            });
-
-          root
-            .findJSXElements(AFTER)
-            .find(j.JSXAttribute, {
-              name: {
-                type: 'JSXIdentifier',
-                name: 'text',
-              },
-            })
-            .filter(nodePath => nodePath.parent.node.name.name === AFTER)
-            .forEach(nodePath => {
-              nodePath.node.name = 'tip';
-            });
-
-          root
-            .findJSXElements(AFTER)
-            .find(j.JSXAttribute, {
-              name: {
-                type: 'JSXIdentifier',
-                name: 'loading',
-              },
-            })
-            .filter(nodePath => nodePath.parent.node.name.name === AFTER)
-            .forEach(nodePath => {
-              nodePath.node.name = 'spinning';
-            });
-        } else {
-          addSubmoduleImport(j, root, {
-            moduleName: pkgName,
-            importedName: AFTER,
-            localName: localComponentName,
+        root
+          .findJSXElements(localComponentName)
+          .find(j.JSXAttribute, {
+            name: {
+              type: 'JSXIdentifier',
+              name: 'text',
+            },
+          })
+          .filter(
+            nodePath => nodePath.parent.node.name.name === localComponentName,
+          )
+          .forEach(nodePath => {
+            nodePath.node.name = 'tip';
           });
-        }
+
+        root
+          .findJSXElements(localComponentName)
+          .find(j.JSXAttribute, {
+            name: {
+              type: 'JSXIdentifier',
+              name: 'loading',
+            },
+          })
+          .filter(
+            nodePath => nodePath.parent.node.name.name === localComponentName,
+          )
+          .forEach(nodePath => {
+            nodePath.node.name = 'spinning';
+          });
+
+        addSubmoduleImport(j, root, {
+          moduleName: pkgName,
+          importedName: AFTER,
+          localName: localComponentName,
+        });
       });
 
     return hasChanged;
